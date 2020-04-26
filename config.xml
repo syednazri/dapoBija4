@@ -5,6 +5,15 @@
     versionCode = "10"
     version     = "1.0.0" >
 
+<access origin="*" />
+<plugin name="cordova-plugin-whitelist" version="1" />
+<allow-intent href="http://*/*" />
+<allow-intent href="https://*/*" />
+<allow-intent href="tel:*" />
+<allow-intent href="sms:*" />
+<allow-intent href="mailto:*" />
+<allow-intent href="geo:*" />
+
   <name>dapoBija</name>
   <description>
       COD service
@@ -23,7 +32,7 @@
   <preference name="android-build-tool" value="ant|gradle" />
   <preference name="android-minSdkVersion" value="10" />
   <preference name="android-maxSdkVersion" value="15" />
-  <preference name="android-targetSdkVersion" value="12" />
+  <preference name="android-targetSdkVersion" value="23" />
   <preference name="android-installLocation" value="auto" />
   <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
 
@@ -32,5 +41,5 @@
   <plugin name="cordova-plugin-splashscreen" spec="3.2.2" />
 
 <icon src="img/dapoBija.png" />
-  <splash src="img/splash.jpg" />
+  <splash src="img/dapoBija.png" />
 </widget>
