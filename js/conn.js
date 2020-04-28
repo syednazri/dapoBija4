@@ -23,7 +23,7 @@ function(opr){
     minBuy = dth.minBuy;
 
     if(dth.vCheck == "false"){
-        window.location.href = "http://dapobija.nineat.com/apk/dapobija.apk";
+        window.location.href = "http://dapobija.nineat.com/apk/dapoBija.apk";
     }
 
 }
