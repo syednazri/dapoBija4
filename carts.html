@@ -19,6 +19,22 @@
         tr td:nth-child(3), tr td:nth-child(5) {
             text-align: right;
         }
+        #mainContainer{
+            color: #283d2e;
+        }
+        #mainContainer h1{
+            margin: 0;
+            text-align: center;
+            background: #bdcfbd;
+            width: 100%;
+        }
+        #mainContainer h2{
+            margin: 0;
+            margin-top: 10px;
+            text-align: center;
+            background: #bdcfbd;
+            width: 100%;
+        }
         #orderTable{
             border-collapse: collapse;
             width: 100%;
@@ -43,11 +59,26 @@
             text-align: right;
             padding: 5px 0px;
         }
-        #deliveryDate_input{
-            padding: 10px;
+        #intoducer{
+            width: 100%;
+        }
+        #deliveryDate_input, #deliveryTime_input {
+            padding: 5px;
             border-radius: 10px;
             text-align: center;
             font-size: 2rem;
+            background: #fff;
+        }
+        #howFindUs{
+            padding: 5px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            background: #fff;
+            width: 100%;
+        }
+        #friendIntro{
+            display: none;
         }
         .orderLst_td{
             font-size: 0.8rem;
@@ -74,6 +105,7 @@
         }
         .gTotal{
             font-size: 1.8rem;
+            font-weight: 600;
             text-align: right;
             border-bottom: 5px solid #666;
         }
@@ -130,25 +162,39 @@
             <div id="listTables"></div>
             <div id="delivery"></div>
             <div id="listContainerGtotal"></div>
-            <textarea rows="4" id="orderRemarks" name="orderRemarks" placeholder="Order Note"></textarea>
+            <textarea rows="4" id="orderRemarks" name="orderRemarks" placeholder="Order Note (delivery time or any other special request to our team)"></textarea>
         </div>
+        <hr>
         <div id="deliveryDate">
-            <h2>Set your delivery date</h2>
+            <h2>Set your delivery date and time</h2>
             <input type="date" id="deliveryDate_input" name="deliveryDate_input" >
-            <!-- <input type="time" id="deliveryTime_input" name="deliveryTime_input" > -->
+            <input type="time" id="deliveryTime_input" name="deliveryTime_input" >
+        </div>
+        <hr>
+        <div id="intoducer">
+            <h2>How do you find us?</h2>
+            <select name="howFindUs" id="howFindUs" onchange="selFriend()">
+                <option disabled selected>Please select</option>
+                <option value="google">Google</option>
+                <option value="facebook">Facebook</option>
+                <option value="friend">Friend</option>
+            </select>
+            <div id="friendIntro">
+            Please let us know your friend's phone number:
+            <input type="number" name="introducerNumber" id="introducerNumber" placeholder="Introducer Phone number">
+            <i>The phone number is only for checking purpose, if your friend is listed into our system database or not.  We shall not keep the contact number unless it is already registered into our system.</i>
+            </div>
         </div>
         <div id="userDetail">
-            
-            <div id="caption1_form"><h2>Complete your personel details</h2> </div>
+            <div id="caption1_form"><h2>Complete your details</h2> </div>
             <input type="text" id="userName" name="userName" placeholder="Name">
             <input type="text" id="phone" name="phone" placeholder="Phone Number">
             <input type="text" id="email" name="email" placeholder="Email">
             <textarea id="address" name="address" rows="6" placeholder="Delivery Adress"></textarea>
             <input type="button" id="submit_order" name="submit_order" value="Submit Order" class="btn" onclick="submitOrder()">
-            <input type="button" id="clearCart" name="clearCart" value="Clear My Cart" class="btn" onclick="clearCart()">
             <input class="btn cancel" type="button" value="Continue Shopping" id="cancel" name="cancel" onclick="gotoPage('index.html')">
+            <input type="button" id="clearCart" name="clearCart" value="Clear My Cart" class="btn" onclick="clearCart()">
             <input type="hidden" id="orderList" name="orderList" >
-            
         </div>
     </div>
 <script>
@@ -303,8 +349,7 @@ function clearCart(){
     localStorage.removeItem("carts");
     location.reload();
 }
-var dFee = 3.8;
-var minBuy = 30;
+
 function submitOrder(){
 
     var tod = new Date();
@@ -316,16 +361,13 @@ function submitOrder(){
     var m = tod.getMinutes();
 
     var sel = new Date(_("deliveryDate_input").value);
-    var tim = new Date();
-    //tim.setHours(_("deliveryTime_input").value.split(":")[0],_("deliveryTime_input").value.split(":")[1]);
-        //console.log(nex);
+    
+        console.log(_("deliveryTime_input").value);
 
-    if(tod > sel){
-        alert("No more order for tomorrow's delivery.\n Thank you.");
+    if(tod >= sel){
+        alert("We are sorry to inform you that there is no delivery for today's order, please set your order for tomorrow's delivery.\n Thank you.");
     }
-    // if(tod >= tim){
-    //     alert("Cannot set time befote the current time");
-    // }
+    
     else{
 
     var spD = _("deliveryDate_input").value;
@@ -342,8 +384,10 @@ function submitOrder(){
     lStore["dateOrder"] = todayDate;
     lStore["timeOrder"] = todayTime;
     lStore["dateDelivery"] = dk[2]+"/"+dk[1]+"/"+dk[0];
-    lStore["timeDelivery"] = dk[2]+"/"+dk[1]+"/"+dk[0]; //_("deliveryTime_input").value;
+    lStore["timeDelivery"] = _("deliveryTime_input").value;
     lStore["orderNote"] = _("orderRemarks").value;
+    lStore["introducer"] = _("howFindUs").value;
+    lStore["introducerNumber"] = _("introducerNumber").value;
     if(!_("deliveryFee")){
         dFee = "";
     }else{
@@ -398,12 +442,12 @@ var dDD = String(newD.getDate()+1).padStart(2, '0');
 var dMM = String(newD.getMonth()+1).padStart(2, '0');
 var dyyyy = newD.getFullYear();
 
-// var tHH = String(today.getHours()).padStart(2, '0');
-// var tMM = String(today.getMinutes()).padStart(2, '0');
-// var tSS = String(today.getSeconds()).padStart(2, '0');
+var tHH = String(today.getHours()).padStart(2, '0');
+var tMM = String(today.getMinutes()).padStart(2, '0');
+var tSS = String(today.getSeconds()).padStart(2, '0');
 
 _("deliveryDate_input").value = dyyyy+"-"+dMM+"-"+dDD;
-// _("deliveryTime_input").value = tHH+":"+tMM+":"+tSS;
+_("deliveryTime_input").value = tHH+":"+tMM+":"+tSS;
 ////////////////////////////////////
 
 
@@ -431,6 +475,13 @@ function dateCheck(){
     // if(tod >= tim){
     //     alert("Cannot set time befote the current time");
     // }
+}
+function selFriend(){
+    if(_("howFindUs").value == "friend"){
+        _("friendIntro").style.display = "block";
+    }else{
+        _("friendIntro").style.display = "none";
+    }
 }
     </script>
 </body>
