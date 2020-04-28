@@ -38,7 +38,6 @@
             padding: 5px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-        
         .stalls{
             background: #7c744f;
         }
@@ -47,7 +46,7 @@
 <body id="theBody">
     <header>
         <nav>
-            <div id="logoContainer">
+            <div id="logoContainer" onclick="gotoPage('index.html')">
                 <img id="theLogo" src="img/dapoBija.png">
             </div>
             <div class="navBtn" onclick="gotoPage('index.html')">
@@ -77,7 +76,7 @@
     <footer>
         <div id="contactIcon">
         <div class="footerIcon">
-            <a href="https://api.whatsapp.com/send?phone=+60146801912" target="_blank">
+            <a href="https://api.whatsapp.com/send?phone=+601110141912" target="_blank">
                 <img src="img/whatApp.png" class="whatAppLogo">
             </a>
             
@@ -87,8 +86,10 @@
                 <img src="img/phone.png" >
             </a>
         </div>
-        <div>
-            <i class="fab fa-facebook-square" style="font-size:48px;color:#3b5998;"></i>
+        <div class="footerIcon">
+        <a href="https://www.facebook.com/dapoBija">
+            <img src="img/fb.png" >
+        </a>
         </div>
     </div>
         <div id="compName">SYARIKAT IKHLIM</div>
@@ -108,16 +109,16 @@
                 for(var rr = 1;rr<=Object.keys(stalls).length;rr++){
                 _cr("ads","div","addsContainer"+rr);
                 _("addsContainer"+rr).setAttribute("class", "flyCont");
-                _cr("addsContainer"+rr,"h1","Ftitle"+rr);
+                _("addsContainer"+rr).setAttribute("onclick", "gotoStall('main.html','"+stalls[rr].id+"')");
+                _cr("addsContainer"+rr,"h2","Ftitle"+rr);
                 _("Ftitle"+rr).setAttribute("class", "Ftitle");
                 _("Ftitle"+rr).innerText = stalls[rr].name;
                 _cr("addsContainer"+rr,"img","theFlyers"+rr);
                 _("theFlyers"+rr).setAttribute("class", "theFlyers");
                 _("theFlyers"+rr).src = imgLink + "flyers/" + stalls[rr].links;
-                _cr("addsContainer"+rr,"input","gotoFlyers"+rr);
-                _("gotoFlyers"+rr).setAttribute("value", "Go to This Stall");
-                _("gotoFlyers"+rr).setAttribute("class", "stalls btn");
-                _("gotoFlyers"+rr).setAttribute("onclick", "gotoStall('main.html','"+stalls[rr].id+"')");
+                // _cr("addsContainer"+rr,"input","gotoFlyers"+rr);
+                // _("gotoFlyers"+rr).setAttribute("value", "Go to This Stall");
+                // _("gotoFlyers"+rr).setAttribute("class", "stalls btn");
                 }
             }
         )
