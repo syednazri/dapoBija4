@@ -44,7 +44,7 @@
 <body>
     <header>
         <nav>
-            <div id="logoContainer">
+            <div id="logoContainer" onclick="gotoPage('index.html')">
                 <img id="theLogo" src="img/dapoBija.png">
             </div>
             <div class="navBtn" onclick="gotoPage('index.html')">
@@ -64,7 +64,6 @@
                     <img class="navLogo" src="img/profileBtn.png">
                     <div class="subBtn">Profile</div>
                 </div>
-            
         </nav>
     </header>
     <div id="mainContainer">
@@ -72,15 +71,15 @@
         <div id="profile">
             <div id="name_div" name="name_div" class="name profile">
                 <div class="profile_title">Name</div>
-                <div class="title_input"><div>Syed Nazri</div><span class="title_input" onclick="edit('name_div','edit')">&#10148;</span></div>
+                <div class="title_input"><div></div><span class="title_input" onclick="edit('name_div','edit')">&#10148;</span></div>
             </div>
             <div id="phone_div" name="phone_div" class="phone profile">
                 <div class="profile_title">Phone Number</div>
-                <div class="title_input"><div>0146801912</div><span class="title_input" onclick="edit('phone_div','edit')">&#10148;</span></div>
+                <div class="title_input"><div></div><span class="title_input" onclick="edit('phone_div','edit')">&#10148;</span></div>
             </div>
             <div id="email_div" name="email_div" class="email profile">
                 <div class="profile_title">Email</div>
-                <div class="title_input"><div>syed@nazri.com</div><span class="title_input" onclick="edit('email_div','edit')">&#10148;</span></div>
+                <div class="title_input"><div></div><span class="title_input" onclick="edit('email_div','edit')">&#10148;</span></div>
             </div>
             <div id="address_div" name="address_div" class="address profile">
                 <div class="profile_title">My Address</div>
@@ -101,6 +100,13 @@
     <script src="js/main.js"></script>
     <script>
     var v = JSON.parse(localStorage.getItem("user"));
+    if(v.username !=""){
+        _("login").style.display = "none";
+        _("logout").style.display = "block";
+    }else{
+        _("login").style.display = "block";
+        _("logout").style.display = "none";
+    }
     function setup(){
         _("name_div").children[1].children[0].innerText = v.username;
         _("phone_div").children[1].children[0].innerText = v.contactNum;
