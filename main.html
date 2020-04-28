@@ -26,17 +26,84 @@
             
             background:#fff;
         }
+        #orderList h2{
+            margin: 0px;
+        }
         #totalOrder{
             padding:5px;
             margin: 5px;
             background:#fff;
+        }
+        #input{
+            
+            display: grid;
+            grid-template-columns: auto auto;
+
+            column-gap: 0.5rem;
+            row-gap: 0.5rem;
+            width: 100%;
+            /* margin: auto auto; */
+
+        }
+        .item-div{
+            width: 100%;
+            background:#ffffff;
+            /* display:flex;
+            flex-direction:column; */
+            padding:5px;
+            /* margin:5px 10px; */
+            /* border:solid 1px #000; */
+            border: none;
+            box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);
+        }
+        .itemName{
+            font-weight: 600;
+            color: #fff;
+            background: #333;
+            padding: 5px;
+        }
+        .itemPrice{
+            font-size:1.2rem;
+            font-weight: 600;
+        }
+        .stat{
+            text-align: center;
+            font-weight: 900;
+            color:#ffffff;
+            background:rgb(133, 28, 28);
+        }
+        .addMinusBtn{
+            position: relative;
+            display:grid;
+            grid-template-columns: 50% 50%;
+            grid-gap: 0px;
+            text-align: center;
+            bottom: 0px;
+            border-radius: 10px;
+            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.8);
+        }
+        .addBtn, .removeBtn{
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            padding: 10px 5px;
+            justify-content: center;
+            
+        }
+        .addBtn{
+            background: #a1ebb7;
+            border-radius: 10px 0px 0px 10px;
+        }
+        .removeBtn{
+            background: #ffadad;
+            border-radius: 0px 10px 10px 0px;
         }
     </style>
 </head>
 <body id="theBody">
     <header>
         <nav>
-            <div id="logoContainer">
+            <div id="logoContainer" onclick="gotoPage('index.html')">
                 <img id="theLogo" src="img/dapoBija.png">
             </div>
             <div class="navBtn" onclick="gotoPage('index.html')">
@@ -56,7 +123,6 @@
                     <img class="navLogo" src="img/profileBtn.png">
                     <div class="subBtn">Profile</div>
                 </div>
-            
         </nav>
     </header>
     <div id="mainContainer">
@@ -65,14 +131,14 @@
     <div id="order">
         <div id="theOrder" class="theOrder">
             <div id="orderList">
-                <h2>Your Order List</h2>
+                <h2>Selected Item</h2>
             </div>
             <div id="totalOrder">
-                <h2>Total Order</h2>
+                <h2>Total Selected</h2>
                 <div id="delivery"></div>
             </div>
-            <div class="btn" id="confirmOrder" onclick="addCart()">Buy Now</div>
-            <div class="btn cancel" id="cancels" onclick="gotoPage('index.html')">Cancel</div>
+            <div class="btn" id="confirmOrder" onclick="addCart()">Add To My Cart</div>
+            <div class="btn cancel" id="back" onclick="gotoPage('index.html')">Continue Shopping</div>
         </div>
         <div id="input"></div>
         
@@ -94,11 +160,11 @@
         getFlyers();
         function getProduct(){
             _cr("order","style","inputStyle");
-            _("inputStyle").innerHTML = "#input{padding:10px;display:flex;flex-direction:column;justify-content:space-between;}";
-            _("inputStyle").innerHTML += "#input {padding:10px;margin:5px 10px;border-radius:5px;font-size:1rem;}";
-            _("inputStyle").innerHTML += ".item-div{background:#efefef;display:flex;flex-direction:column;padding:5px;margin:5px 10px;border:solid 1px #000;box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);}";
-            _("inputStyle").innerHTML += ".itemName{font-size:1.5rem}";
-            _("inputStyle").innerHTML += ".itemPrice{font-size:1.2rem}";
+            // _("inputStyle").innerHTML = "#input{padding:10px;display:flex;flex-direction:column;justify-content:space-between;}";
+            // _("inputStyle").innerHTML += "#input {padding:10px;margin:5px 10px;border-radius:5px;font-size:1rem;}";
+            // _("inputStyle").innerHTML += ".item-div{background:#efefef;display:flex;flex-direction:column;padding:5px;margin:5px 10px;border:solid 1px #000;box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);}";
+            // _("inputStyle").innerHTML += ".itemName{font-size:1.5rem}";
+            // _("inputStyle").innerHTML += ".itemPrice{font-size:1.2rem}";
             _("inputStyle").innerHTML += ".order{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);display:flex;flex-direction:column;margin:5px 0px;padding:5px;border:solid 1px #666;border-radius:5px;}";
             //_("inputStyle").innerHTML += ".orderContainer{display:flex;justify-content:space-between;padding:5px;font-size:1.2rem}";
             _("inputStyle").innerHTML += ".cancelOrder{display:flex;justify-content:flex-end;margin-bottom:5px;}";
@@ -109,12 +175,13 @@
             _("inputStyle").innerHTML += ".selectOpt{padding:10px;margin-top:5px;background:#c0d8cc;}";
             _("inputStyle").innerHTML += ".avail{padding:5px;margin-top:8px;font-size:1.2rem;}";
             _("inputStyle").innerHTML += ".optSel{margin:5px;padding:5px;background:#999;cursor:pointer;}";
-            _("inputStyle").innerHTML += ".removeOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
-            _("inputStyle").innerHTML += ".addOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
-            _("inputStyle").innerHTML += ".addMinusBtn{display:flex;justify-content:flex-start;}";
+            // _("inputStyle").innerHTML += ".removeOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
+            // _("inputStyle").innerHTML += ".addOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
+            // _("inputStyle").innerHTML += ".addMinusBtn{display:flex;justify-content:flex-start;}";
             _("inputStyle").innerHTML += ".optSubTotal,.orderContainerTotal{display:flex;justify-content:flex-end;font-size:1.6rem;border-bottom:2px solid #666;}";
             _("inputStyle").innerHTML += ".productImg{width:100%;}";
             _("inputStyle").innerHTML += ".numDis{color:black;background:none;}";
+            _("inputStyle").innerHTML += "";
             // _("inputStyle").innerHTML += ".numDis{color:#336600;background:#99cc00;border-radius:10px;width:auto;padding:10px;box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.8) inset}";
             
                     
@@ -128,109 +195,131 @@
                 // console.log(JSON.parse(trig));
                     var JsonDataLength = parseInt(jsonData[1]["id"]) + parseInt(Object.keys(jsonData).length);
                     for(var ts=1;ts<=Object.keys(jsonData).length;ts++){
-                        _cr("input","div","item-div"+ts);
-                        _("item-div"+ts).setAttribute("class","item-div");
-                        
-                        _cr("item-div"+ts,"div","itemDetail"+ts);
 
-                        _cr("itemDetail"+ts,"img","productImg"+ts);
-                        _("productImg"+ts).setAttribute("src",imgLink + "product/"+localStorage.getItem("stall")+"/" +jsonData[ts]["img"]);
-                        _("productImg"+ts).setAttribute("class","productImg")
+                        if(jsonData[ts]["stat"] != "2"){
 
-                        _cr("itemDetail"+ts,"div","itemName"+ts);
-                        _("itemName"+ts).setAttribute("class","itemName");
-                        _("itemName"+ts).innerText = jsonData[ts]["name"];
-
-                        var var_itemPrice = jsonData[ts]["price"];
-                        if(var_itemPrice == ""){
-                            var_itemPrice = 0;
-                        }
-                        _cr("itemDetail"+ts,"div","itemPrice"+ts);
-                        _("itemPrice"+ts).setAttribute("class","itemPrice");
-                        _("itemPrice"+ts).innerHTML = numRM(var_itemPrice);
-                        
-                        _cr("itemDetail"+ts,"div","itemDesc"+ts);
-                        _("itemDesc"+ts).setAttribute("class","itemDesc");
-                        _("itemDesc"+ts).innerText = jsonData[ts]["description"];
-
-                        var selOpt = "false";
-                        if(jsonData[ts]["option"] != ""){
+                            _cr("input","div","item-div"+ts);
+                            _("item-div"+ts).setAttribute("class","item-div");
                             
-                            _cr("item-div"+ts,"div","label"+ts);
-                            _("label"+ts).setAttribute("class","avail");
+                            _cr("item-div"+ts,"div","itemDetail"+ts);
 
-                            _("label"+ts).innerText = "Available Option : ";
-                            _cr("item-div"+ts,"div","selectOpt"+ts);
-                            _("selectOpt"+ts).setAttribute("class","selectOpt");
-                            
-                            for(var yt=1;yt<=Object.keys(jsonData[ts]["option"]).length;yt++){
-                                var optPrice = jsonData[ts]["option"][yt]["optPrice"]
-                                if(optPrice == ""){
-                                    optPrice = 0;
-                                }
-                                _cr("selectOpt"+ts,"div", "opts-"+ts+"-"+yt);
-                                _("opts-"+ts+"-"+yt).setAttribute("class","opts");
-                                _("opts-"+ts+"-"+yt).innerText = jsonData[ts]["option"][yt]["optName"];
+                            _cr("itemDetail"+ts,"img","productImg"+ts);
+                            _("productImg"+ts).setAttribute("src",imgLink + "product/"+localStorage.getItem("stall")+"/" +jsonData[ts]["img"]);
+                            _("productImg"+ts).setAttribute("class","productImg")
 
-                                _cr("selectOpt"+ts,"div", "optsPrice-"+ts+"-"+yt);
-                                _("optsPrice-"+ts+"-"+yt).innerText = numRM(optPrice);
+                            _cr("itemDetail"+ts,"div","itemName"+ts);
+                            _("itemName"+ts).setAttribute("class","itemName");
+                            _("itemName"+ts).innerText = jsonData[ts]["name"];
 
-                                _cr("selectOpt"+ts,"input","qtyOpts"+ts+"-"+yt);
-                                // _("qtyOpts"+ts+"-"+yt).setAttribute("placeholder","Your Order Quantity");
-                                _("qtyOpts"+ts+"-"+yt).setAttribute("type","number");
-                                _("qtyOpts"+ts+"-"+yt).setAttribute("class","numDis");
-                                _("qtyOpts"+ts+"-"+yt).setAttribute("readonly","readonly");
-
-                                
-                                _cr("selectOpt"+ts,"div","addMinusBtn"+ts+"-"+yt);
-                                _("addMinusBtn"+ts+"-"+yt).setAttribute("class", "addMinusBtn");
-
-                                _cr("addMinusBtn"+ts+"-"+yt,"div","addItem"+ts+"-"+yt);
-                                _("addItem"+ts+"-"+yt).innerHTML = "Add Order";
-                                _("addItem"+ts+"-"+yt).setAttribute("class", "addOrderBtn");
-                                _("addItem"+ts+"-"+yt).setAttribute(
-                                    "onclick",
-                                    "addOrder('"+ts+"','"+_("qtyOpts"+ts+"-"+yt).value+"','"+yt+"','"+jsonData[ts]["option"][yt]["optID"]+"','"+jsonData[ts]["id"]+"')"
-                                    );
-
-                                _cr("addMinusBtn"+ts+"-"+yt,"div","minusItem"+ts+"-"+yt);
-                                _("minusItem"+ts+"-"+yt).innerHTML = "Remove Order";
-                                _("minusItem"+ts+"-"+yt).setAttribute("class", "removeOrderBtn");
-                                _("minusItem"+ts+"-"+yt).setAttribute(
-                                    "onclick",
-                                    "minusOrder('"+ts+"','"+_("qtyOpts"+ts+"-"+yt).value+"','"+yt+"','"+jsonData[ts]["option"][yt]["optID"]+"','"+jsonData[ts]["id"]+"')"
-                                    );
+                            var var_itemPrice = jsonData[ts]["price"];
+                            if(var_itemPrice == ""){
+                                var_itemPrice = 0;
                             }
-                        }else{
+                            _cr("itemDetail"+ts,"div","itemPrice"+ts);
+                            _("itemPrice"+ts).setAttribute("class","itemPrice");
+                            _("itemPrice"+ts).innerHTML = numRM(var_itemPrice);
+                            
+                            _cr("itemDetail"+ts,"div","itemDesc"+ts);
+                            _("itemDesc"+ts).setAttribute("class","itemDesc");
+                            _("itemDesc"+ts).innerText = jsonData[ts]["description"];
 
-                        _cr("item-div"+ts,"input","qty"+ts);
-                        // _("qty"+ts).setAttribute("placeholder","Your Order Quantity");
-                        _("qty"+ts).setAttribute("type","number");
-                        _("qty"+ts).setAttribute("class","numDis");
-                        _("qty"+ts).setAttribute("readonly","readonly");
+                            var dpe;
+                            if(jsonData[ts]["stat"] == "1"){
+                                dpe = "SOLD OUT";
+                            }else if(jsonData[ts]["stat"] == "2"){
+                                dpe = "Not Available";
+                            }else{
+                                dpe = "";
+                            }
+                            console.log(jsonData[ts]["stat"]);
+                            _cr("itemDetail"+ts,"div","stat"+ts);
+                            _("stat"+ts).setAttribute("class","stat");
+                            _("stat"+ts).innerHTML = dpe;
 
-                        _cr("item-div"+ts,"div","addMinusBtn"+ts);
-                        _("addMinusBtn"+ts).setAttribute("class", "addMinusBtn");
+                            var selOpt = "false";
+                            if(jsonData[ts]["option"] != ""){
+                                
+                                _cr("item-div"+ts,"div","label"+ts);
+                                _("label"+ts).setAttribute("class","avail");
 
-                        _cr("addMinusBtn"+ts,"div","addItem"+ts);
-                        _("addItem"+ts).innerHTML = "Add Order";
-                        _("addItem"+ts).setAttribute("class", "addOrderBtn");
-                        _("addItem"+ts).setAttribute(
-                            "onclick",
-                            "addOrder('"+ts+"','"+_("qty"+ts).value+"','"+selOpt+"','none','"+jsonData[ts]["id"]+"')"
-                            );
+                                _("label"+ts).innerText = "Available Option : ";
+                                _cr("item-div"+ts,"div","selectOpt"+ts);
+                                _("selectOpt"+ts).setAttribute("class","selectOpt");
+                                
+                                for(var yt=1;yt<=Object.keys(jsonData[ts]["option"]).length;yt++){
+                                    var optPrice = jsonData[ts]["option"][yt]["optPrice"]
+                                    if(optPrice == ""){
+                                        optPrice = 0;
+                                    }
+                                    _cr("selectOpt"+ts,"div", "opts-"+ts+"-"+yt);
+                                    _("opts-"+ts+"-"+yt).setAttribute("class","opts");
+                                    _("opts-"+ts+"-"+yt).innerText = jsonData[ts]["option"][yt]["optName"];
 
-                        _cr("addMinusBtn"+ts,"div","minusItem"+ts);
-                        _("minusItem"+ts).innerHTML = "Remove Order";
-                        _("minusItem"+ts).setAttribute("class", "removeOrderBtn");
-                        _("minusItem"+ts).setAttribute(
-                            "onclick",
-                            "minusOrder('"+ts+"','"+_("qty"+ts).value+"','"+selOpt+"','none','"+jsonData[ts]["id"]+"')"
-                            );
+                                    _cr("selectOpt"+ts,"div", "optsPrice-"+ts+"-"+yt);
+                                    _("optsPrice-"+ts+"-"+yt).innerText = numRM(optPrice);
+
+                                    _cr("selectOpt"+ts,"input","qtyOpts"+ts+"-"+yt);
+                                    // _("qtyOpts"+ts+"-"+yt).setAttribute("placeholder","Your Order Quantity");
+                                    _("qtyOpts"+ts+"-"+yt).setAttribute("type","number");
+                                    _("qtyOpts"+ts+"-"+yt).setAttribute("class","numDis");
+                                    _("qtyOpts"+ts+"-"+yt).setAttribute("readonly","readonly");
+
+                                    
+                                    _cr("selectOpt"+ts,"div","addMinusBtn"+ts+"-"+yt);
+                                    _("addMinusBtn"+ts+"-"+yt).setAttribute("class", "addMinusBtn");
+
+                                    _cr("addMinusBtn"+ts+"-"+yt,"div","addItem"+ts+"-"+yt);
+                                    _("addItem"+ts+"-"+yt).innerHTML = "Add Order";
+                                    _("addItem"+ts+"-"+yt).setAttribute("class", "addBtn");
+                                    _("addItem"+ts+"-"+yt).setAttribute(
+                                        "onclick",
+                                        "addOrder('"+ts+"','"+_("qtyOpts"+ts+"-"+yt).value+"','"+yt+"','"+jsonData[ts]["option"][yt]["optID"]+"','"+jsonData[ts]["id"]+"')"
+                                        );
+
+                                    _cr("addMinusBtn"+ts+"-"+yt,"div","minusItem"+ts+"-"+yt);
+                                    _("minusItem"+ts+"-"+yt).innerHTML = "Remove Order";
+                                    _("minusItem"+ts+"-"+yt).setAttribute("class", "removeBtn");
+                                    _("minusItem"+ts+"-"+yt).setAttribute(
+                                        "onclick",
+                                        "minusOrder('"+ts+"','"+_("qtyOpts"+ts+"-"+yt).value+"','"+yt+"','"+jsonData[ts]["option"][yt]["optID"]+"','"+jsonData[ts]["id"]+"')"
+                                        );
+                                }
+                            }else{
+
+                            _cr("item-div"+ts,"input","qty"+ts);
+                            // _("qty"+ts).setAttribute("placeholder","Your Order Quantity");
+                            _("qty"+ts).setAttribute("type","number");
+                            _("qty"+ts).setAttribute("class","numDis");
+                            _("qty"+ts).setAttribute("readonly","readonly");
+
+                            _cr("item-div"+ts,"div","addMinusBtn"+ts);
+                            _("addMinusBtn"+ts).setAttribute("class", "addMinusBtn");
+
+                            _cr("addMinusBtn"+ts,"div","addItem"+ts);
+                            _("addItem"+ts).innerHTML = "Add Order";
+                            _("addItem"+ts).setAttribute("class", "addBtn");
+                            _("addItem"+ts).setAttribute(
+                                "onclick",
+                                "addOrder('"+ts+"','"+_("qty"+ts).value+"','"+selOpt+"','none','"+jsonData[ts]["id"]+"')"
+                                );
+
+                            _cr("addMinusBtn"+ts,"div","minusItem"+ts);
+                            _("minusItem"+ts).innerHTML = "Remove Order";
+                            _("minusItem"+ts).setAttribute("class", "removeBtn");
+                            _("minusItem"+ts).setAttribute(
+                                "onclick",
+                                "minusOrder('"+ts+"','"+_("qty"+ts).value+"','"+selOpt+"','none','"+jsonData[ts]["id"]+"')"
+                                );
+                            }
+
+                            if(_("stat"+ts).innerHTML != "" ){
+                                _("addMinusBtn"+ts).style.display = "none";
+                            }
                         }
                     }
                 }
             )
+            
         }
         getProduct()
         _cr("totalOrder","div","grandTotal");
@@ -335,7 +424,6 @@
             }  
             countGT(); 
             recordCart();
-            deliveryFee();
         }
         function minusOrder(mn,mqty,mOpt,optID,orderID){
             if(mqty == ""){mqty = 1;}
@@ -380,7 +468,6 @@
             }
             countGT();
             recordCart();
-            deliveryFee();
         }
         function countGT(){
             var totGT = 0;
@@ -401,7 +488,6 @@
             cr.parentNode.removeChild(cr);
             countGT();
             recordCart();
-            deliveryFee();
         }
         countGT();
         var j;
@@ -449,7 +535,10 @@
                     
                     localStorage.setItem("carts",JSON.stringify(j));
                     _("cartNum").innerText = Object.keys(j.orders).length;
-                    window.location.href = "carts.html";
+                    alert("Your order list added to your cart, please check your chart.\nThank you.");
+                    updateCart();
+                    window.location.reload();
+                    // window.location.href = "carts.html";
                 }
         }
     function updateCart(){
@@ -459,30 +548,6 @@
         }
     }
     updateCart();
-    function deliveryFee(){
-        var delOrder = 0;
-        var fhh = _("orderList").childElementCount;
-        for(var ty=1;ty<_("orderList").childElementCount;ty++){
-            delOrder += parseFloat(_("orderList").children[ty].children[3].children[2].innerText);
-        }
-        var dG = parseFloat(_("grandTotal").innerText.split(" ")[1]);
-        if(delOrder < 3){
-            _cr("delivery","div","deliveryFee");
-            _("deliveryFee").innerHTML = "Delivery Fee = RM3.00";
-            _("grandTotal").innerText = numRM(dG + 3);
-            
-        }
-        if(delOrder >= 3){
-            _("deliveryFee").innerHTML = "";
-            
-           
-        } 
-        if(fhh == 1){
-            _("deliveryFee").innerHTML = "";
-            _("grandTotal").innerText = numRM(0);
-           
-        } 
-    }
     </script>
     <footer>
         
