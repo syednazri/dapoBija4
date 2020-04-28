@@ -80,7 +80,7 @@ nav .smlNum{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgb(255, 255, 255);
+    /* background: rgb(255, 255, 255); */
 }
 
 #logoContainer #theLogo{
@@ -103,6 +103,7 @@ footer{
 #contactIcon{
     width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
 }
