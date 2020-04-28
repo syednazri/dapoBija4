@@ -54,7 +54,6 @@ function gotoStall(pages,stall){
     localStorage.setItem("stall",stall);
 }
 
-
 if(!localStorage.getItem("user")){
     loginForm();
     alert("The System unabled to load your info, please login if you already set your password.  Thank you.");
@@ -143,10 +142,8 @@ function login(){
         alert("Welcome back "+ hets.username);
         
         window.location.reload();
-    // localStorage.setItem("user",JSON.stringify(theUser));
     }else{
-        alert("Wrong Phone Number or Password.")
-    console.log(klo);
+        alert("Wrong Phone Number or Password.\nYour phone number should start with 0 (e.g 012 3345567, remove country code +6 or 6)");
     }});
 }
 function later(){
