@@ -39,6 +39,10 @@
             padding: 5px;
             margin: 5px;
         }
+        #delivery{
+            text-align: right;
+            padding: 5px 0px;
+        }
         #deliveryDate_input{
             padding: 10px;
             border-radius: 10px;
@@ -98,7 +102,7 @@
 <body>
     <header>
         <nav>
-            <div id="logoContainer">
+            <div id="logoContainer" onclick="gotoPage('index.html')">
                 <img id="theLogo" src="img/dapoBija.png">
             </div>
             <div class="navBtn" onclick="gotoPage('index.html')">
@@ -118,7 +122,6 @@
                     <img class="navLogo" src="img/profileBtn.png">
                     <div class="subBtn">Profile</div>
                 </div>
-            
         </nav>
     </header>
     <div id="mainContainer">
@@ -300,6 +303,8 @@ function clearCart(){
     localStorage.removeItem("carts");
     location.reload();
 }
+var dFee = 3.8;
+var minBuy = 30;
 function submitOrder(){
 
     var tod = new Date();
@@ -325,7 +330,7 @@ function submitOrder(){
 
     var spD = _("deliveryDate_input").value;
     var dk = spD.split("-");
-
+    
     if(userName.value == "" || phone.value == "" || address.value == ""){
         alert("Pleae complete the form.\nThank you.");
     }else{
@@ -339,6 +344,14 @@ function submitOrder(){
     lStore["dateDelivery"] = dk[2]+"/"+dk[1]+"/"+dk[0];
     lStore["timeDelivery"] = dk[2]+"/"+dk[1]+"/"+dk[0]; //_("deliveryTime_input").value;
     lStore["orderNote"] = _("orderRemarks").value;
+    if(!_("deliveryFee")){
+        dFee = "";
+    }else{
+        lStore["deliveryFee"] = dFee;
+    }
+    console.log(dFee);
+    console.log(lStore["deliveryFee"]);
+
     var orderSubmit = "submit_order="+JSON.stringify(lStore);
     xPost(processorLink,
     orderSubmit,
@@ -370,12 +383,12 @@ function deliveryFees(){
     }
     var dG = parseFloat(_("gTotal").innerText.split(" ")[1]);
     
-    if(yss < 3){
+    if(Number(dG) < Number(minBuy)){
             _cr("delivery","div","deliveryFee");
-            _("deliveryFee").innerHTML = "Delivery Fee = RM3.00";
-            _("gTotal").innerText = numRM(dG + 3);
+            _("deliveryFee").innerHTML = "Delivery Fee = "+numRM(dFee);
+            _("gTotal").innerText = numRM(dG + dFee);
     }
-    if(yss >= 3){
+    if(Number(dG) >= Number(minBuy)){
         _("deliveryFee").innerHTML = "";
     } 
 }
