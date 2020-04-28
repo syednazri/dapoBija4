@@ -171,13 +171,7 @@
         getFlyers();
         function getProduct(){
             _cr("order","style","inputStyle");
-            // _("inputStyle").innerHTML = "#input{padding:10px;display:flex;flex-direction:column;justify-content:space-between;}";
-            // _("inputStyle").innerHTML += "#input {padding:10px;margin:5px 10px;border-radius:5px;font-size:1rem;}";
-            // _("inputStyle").innerHTML += ".item-div{background:#efefef;display:flex;flex-direction:column;padding:5px;margin:5px 10px;border:solid 1px #000;box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);}";
-            // _("inputStyle").innerHTML += ".itemName{font-size:1.5rem}";
-            // _("inputStyle").innerHTML += ".itemPrice{font-size:1.2rem}";
             _("inputStyle").innerHTML += ".order{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);display:flex;flex-direction:column;margin:5px 0px;padding:5px;border:solid 1px #666;border-radius:5px;}";
-            //_("inputStyle").innerHTML += ".orderContainer{display:flex;justify-content:space-between;padding:5px;font-size:1.2rem}";
             _("inputStyle").innerHTML += ".cancelOrder{display:flex;justify-content:flex-end;margin-bottom:5px;}";
             _("inputStyle").innerHTML += ".orderListCont{margin:5px 0px;padding:5px;font-size:1.6rem}";
             _("inputStyle").innerHTML += ".optionsContMain{width:100%}";
@@ -186,23 +180,16 @@
             _("inputStyle").innerHTML += ".selectOpt{padding:10px;margin-top:5px;background:#c0d8cc;}";
             _("inputStyle").innerHTML += ".avail{padding:5px;margin-top:8px;font-size:1.2rem;}";
             _("inputStyle").innerHTML += ".optSel{margin:5px;padding:5px;background:#999;cursor:pointer;}";
-            // _("inputStyle").innerHTML += ".removeOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
-            // _("inputStyle").innerHTML += ".addOrderBtn{box-shadow:0px 0px 10px 1px rgba(0,0,0,0.6);border:solid 1px #000;text-align:center;margin:5px;padding:5px;background:#bbb;cursor:pointer;border-radius:5px;}";
-            // _("inputStyle").innerHTML += ".addMinusBtn{display:flex;justify-content:flex-start;}";
             _("inputStyle").innerHTML += ".optSubTotal,.orderContainerTotal{display:flex;justify-content:flex-end;font-size:1.6rem;border-bottom:2px solid #666;}";
             _("inputStyle").innerHTML += ".productImg{width:100%;}";
-            // _("inputStyle").innerHTML += ".numDis{color:black;background:none;}";
-            // _("inputStyle").innerHTML += ".numDis{color:#336600;background:#99cc00;border-radius:10px;width:auto;padding:10px;box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.8) inset}";
-            
                     
             xPost(
             processorLink,
             "mainContent=product&flyersID="+localStorage.getItem("stall"),
                 function(trig){
-                    // console.log(trig);
+                    
                 var jsonData = JSON.parse(trig);
-                // console.log('jsonData[ts]["option"] =>'+ jsonData[1].option);
-                // console.log(JSON.parse(trig));
+                
                     var JsonDataLength = parseInt(jsonData[1]["id"]) + parseInt(Object.keys(jsonData).length);
                     for(var ts=1;ts<=Object.keys(jsonData).length;ts++){
 
@@ -275,6 +262,8 @@
 
                                     _cr("selectOpt"+ts,"div", "optsPrice-"+ts+"-"+yt);
                                     _("optsPrice-"+ts+"-"+yt).innerText = numRM(optPrice);
+
+                                    
                                     
                                     _cr("selectOpt"+ts,"div","addMinusBtn"+ts+"-"+yt);
                                     _("addMinusBtn"+ts+"-"+yt).setAttribute("class", "addMinusBtn");
@@ -546,7 +535,7 @@
                     
                     localStorage.setItem("carts",JSON.stringify(j));
                     _("cartNum").innerText = Object.keys(j.orders).length;
-                    alert("Your order list added to your cart, please check your chart.\nThank you.");
+                    alert("Your order list added to your cart, please check your cart.\nThank you.");
                     updateCart();
                     window.location.reload();
                     // window.location.href = "carts.html";
