@@ -1,5 +1,4 @@
-var Juser;
-today = new Date();
+var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth()).padStart(2, '0');
 var yyyy = today.getFullYear();
@@ -17,7 +16,7 @@ function _cr(induk, item, id){
     let itemContainer = _(induk);
     let items = document.createElement(item);
     itemContainer.appendChild(items);
-    if(id != ""){
+    if(id !== ""){
         items.setAttribute("id",id);
         items.setAttribute("name",id);
     }
@@ -53,12 +52,28 @@ function gotoStall(pages,stall){
     window.location.href = pages;
     localStorage.setItem("stall",stall);
 }
-
+function userIDcheck(){
+    var t = JSON.parse(localStorage.getItem("user"));
+    xPost(
+        processorLink,
+        "idCheck="+t.idKey+"&userID="+t.userID,
+        function(tfr){
+            if(tfr == "false"){
+                loginForm();
+                alert("Your current data stamp in your device is not exist in our system, We will create new data stamp for you.  Please complete your Profile form.  Thank you.");
+                localStorage.removeItem("user");
+                localStorage.removeItem("carts");
+                gotoPage("profile.html");
+            }
+        }
+    )
+}
 if(!localStorage.getItem("user")){
     loginForm();
     alert("The System unabled to load your info, please login if you already set your password.  Thank you.");
 }else{
-    createNewCart()
+    userIDcheck();
+    createNewCart();
 }
 
 function loginForm(){
