@@ -63,7 +63,7 @@ function userIDcheck(){
                 alert("Your current data stamp in your device is not exist in our system, We will create new data stamp for you.  Please complete your Profile form.  Thank you.");
                 localStorage.removeItem("user");
                 localStorage.removeItem("carts");
-                gotoPage("profile.html");
+                gotoPage("index.html");
             }
         }
     )
