@@ -199,11 +199,11 @@
                             _("item-div"+ts).setAttribute("class","item-div");
                             
                             _cr("item-div"+ts,"div","itemDetail"+ts);
-
+                            if(jsonData[ts]["img"] !== ""){
                             _cr("itemDetail"+ts,"img","productImg"+ts);
                             _("productImg"+ts).setAttribute("src",imgLink + "product/"+localStorage.getItem("stall")+"/" +jsonData[ts]["img"]);
-                            _("productImg"+ts).setAttribute("class","productImg")
-
+                            _("productImg"+ts).setAttribute("class","productImg");
+                            }
                             _cr("itemDetail"+ts,"div","itemName"+ts);
                             _("itemName"+ts).setAttribute("class","itemName");
                             _("itemName"+ts).innerText = jsonData[ts]["name"];
@@ -228,7 +228,6 @@
                             }else{
                                 dpe = "";
                             }
-                            console.log(jsonData[ts]["stat"]);
                             _cr("itemDetail"+ts,"div","stat"+ts);
                             _("stat"+ts).setAttribute("class","stat");
                             _("stat"+ts).innerHTML = dpe;
